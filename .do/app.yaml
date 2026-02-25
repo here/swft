@@ -10,9 +10,11 @@ static_sites:
     envs:
       - key: VITE_SUPABASE_URL
         value: https://wqwgegfnjfsoanmszhyu.supabase.co
+        scope: BUILD_TIME
         type: GENERAL
       - key: VITE_SUPABASE_ANON_KEY
         value: sb_publishable_CQJ9ciystN_-MlefcyDKrg_xriMb_6Z
+        scope: BUILD_TIME
         type: GENERAL
     routes:
       - path: /
