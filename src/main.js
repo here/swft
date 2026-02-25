@@ -8,7 +8,10 @@ const supabase = createClient(
 )
 
 // -- Map setup ----------------------------------------------------------------
-const map = L.map('map').setView([20, 0], 2)
+const SILVER_LAKE = [34.087, -118.26]
+const NEIGHBORHOOD_ZOOM = 15 // ~1 square mile
+
+const map = L.map('map').setView(SILVER_LAKE, NEIGHBORHOOD_ZOOM)
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -52,6 +55,18 @@ map.on('click', async ({ latlng }) => {
   if (error) console.error('Error inserting click:', error)
   // Marker will appear via the realtime subscription, not inserted locally
 })
+
+// -- Geolocation --------------------------------------------------------------
+if ('geolocation' in navigator) {
+  navigator.geolocation.getCurrentPosition(
+    ({ coords }) => {
+      map.setView([coords.latitude, coords.longitude], NEIGHBORHOOD_ZOOM)
+    },
+    () => {
+      // Permission denied or unavailable — stay on Silver Lake default
+    }
+  )
+}
 
 // -- Init ---------------------------------------------------------------------
 loadExistingClicks()
