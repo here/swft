@@ -1,0 +1,22 @@
+name: swft
+region: nyc
+
+static_sites:
+  - name: frontend
+    source_dir: /
+    build_command: npm run build
+    output_dir: dist
+    environment_slug: node-js
+    envs:
+      - key: VITE_SUPABASE_URL
+        value: https://wqwgegfnjfsoanmszhyu.supabase.co
+        type: GENERAL
+      - key: VITE_SUPABASE_ANON_KEY
+        value: sb_publishable_CQJ9ciystN_-MlefcyDKrg_xriMb_6Z
+        type: GENERAL
+    routes:
+      - path: /
+
+domains:
+  - domain: swft.herebox.org
+    type: PRIMARY

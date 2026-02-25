@@ -1,0 +1,17 @@
+{
+  "name": "swft",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "vite": "^6.1.0"
+  }
+}
