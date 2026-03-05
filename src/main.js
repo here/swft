@@ -13,8 +13,8 @@ const NEIGHBORHOOD_ZOOM = 15 // ~1 square mile
 
 const map = L.map('map').setView(SILVER_LAKE, NEIGHBORHOOD_ZOOM)
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
   maxZoom: 19,
 }).addTo(map)
 
