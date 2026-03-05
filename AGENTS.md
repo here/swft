@@ -48,7 +48,12 @@ create table clicks (
 
 ## Dev Notes
 
+- Use 'ergo' for all feature planning, run "ergo --help" to learn it
 - Target: working prototype in a single session
 - Keep it simple — avoid premature abstraction
 - No custom backend server needed initially; Supabase handles persistence and broadcast
 - Architecture chosen to accommodate future backend services on DO App Platform
+
+## Long Description
+
+The world is full of delightful things that elevate our mood and give us hope.  These are the small, white, fluffy things. Though they may be important they are not consequential. They are fleeting, passing fancies.  A tiny cloud.  A tiny dog.  A dollop of foam. A wayward plastic bag. A hair-do passing you on the street.  An SWFT is an idea; a spontaneous something that brushes the backs of your ankles and reminds you that life is fleeting yet always completely full- a tingle of excitement, a tremor of joy, a glimpse of bliss.  Therefore a SWFT doesn’t have to be small, or white, or fluffy.  It just has to be whatever makes you feel that tiny burst of anticipation of wonderfulness.  Therefore a SWFT can be a poodle or a pitbull, a dandelion puff floating through the air or a rain drop hitting a puddle.  It’s whatever brings you that feeling that the world is actually more full of unexpected pleasure than predictable doldrums, more full of delight than depression. When that feeling invigorates you, whether by petting a kitten or kenning an idea, place a dot on your map and remove the construct of mandated rectilinear space and instead soften the landscape with playful memory. If you wish to make a note or add a photo-fantastic!  if you wish to share, thank you in advance!  If you wish only to look at other fluffs and floofs, or to see where others have had so much joy feel free to browse.  But most importantly touchstone your enjoyment of time and space and let the dots remind you of the fullness of the world . Today has the potential, always, to show you more than you anticipate if you participate in looking for it.
