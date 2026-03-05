@@ -19,19 +19,22 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map)
 
 // -- State --------------------------------------------------------------------
-let latestSwft = null  // { lat, lng } of most recently known SWFT
+let latestSwft = null   // { lat, lng } of most recently known SWFT
+let autoFollow = false  // pan to each new SWFT as it arrives
+const markers = []      // all live CircleMarker instances
 
 // -- Helpers ------------------------------------------------------------------
 const MARKER_RADIUS = Math.round(window.innerHeight / 10)
 
 function addMarker(lat, lng) {
-  L.circleMarker([lat, lng], {
+  const m = L.circleMarker([lat, lng], {
     radius: MARKER_RADIUS,
     fillColor: '#fff',
     fillOpacity: 0.88,
     weight: 1,
     color: 'rgba(0,0,0,0.12)',
   }).addTo(map)
+  markers.push(m)
 }
 
 // -- Load existing clicks -----------------------------------------------------
@@ -56,6 +59,7 @@ supabase
     ({ new: row }) => {
       latestSwft = { lat: row.lat, lng: row.lng }
       addMarker(row.lat, row.lng)
+      if (autoFollow) map.panTo([row.lat, row.lng])
     }
   )
   .subscribe()
@@ -83,6 +87,51 @@ if ('geolocation' in navigator) {
     }
   )
 }
+
+// -- Controls -----------------------------------------------------------------
+const controls = document.getElementById('swft-controls')
+
+const btnFollow = document.createElement('button')
+btnFollow.className = 'swft-btn'
+btnFollow.title = 'Auto-follow new SWFTs'
+btnFollow.textContent = '↻'
+btnFollow.addEventListener('click', () => {
+  autoFollow = !autoFollow
+  btnFollow.classList.toggle('active', autoFollow)
+})
+controls.appendChild(btnFollow)
+
+const btnLatest = document.createElement('button')
+btnLatest.className = 'swft-btn'
+btnLatest.title = 'Go to most recent SWFT'
+btnLatest.textContent = '⊙'
+btnLatest.addEventListener('click', () => {
+  if (latestSwft) map.panTo([latestSwft.lat, latestSwft.lng])
+})
+controls.appendChild(btnLatest)
+
+const btnLocate = document.createElement('button')
+btnLocate.className = 'swft-btn'
+btnLocate.title = 'Go to my location'
+btnLocate.textContent = '⊕'
+btnLocate.addEventListener('click', () => {
+  if (!('geolocation' in navigator)) return
+  navigator.geolocation.getCurrentPosition(
+    ({ coords }) => map.panTo([coords.latitude, coords.longitude]),
+    () => {}  // permission denied or unavailable — fail silently
+  )
+})
+controls.appendChild(btnLocate)
+
+const btnClear = document.createElement('button')
+btnClear.className = 'swft-btn'
+btnClear.title = 'Clear all SWFTs'
+btnClear.textContent = '✕'
+btnClear.addEventListener('click', () => {
+  markers.forEach(m => m.remove())
+  markers.length = 0
+})
+controls.appendChild(btnClear)
 
 // -- Init ---------------------------------------------------------------------
 loadExistingClicks()
