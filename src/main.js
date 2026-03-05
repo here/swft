@@ -13,8 +13,8 @@ const NEIGHBORHOOD_ZOOM = 15 // ~1 square mile
 
 const map = L.map('map').setView(SILVER_LAKE, NEIGHBORHOOD_ZOOM)
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles by <a href="https://www.hotosm.org/">HOT</a>',
   maxZoom: 19,
 }).addTo(map)
 
@@ -25,14 +25,16 @@ const markers = []      // all live CircleMarker instances
 
 // -- Helpers ------------------------------------------------------------------
 const MARKER_RADIUS = Math.round(window.innerHeight / 10)
+const MARKER_SIZE   = MARKER_RADIUS * 2
 
 function addMarker(lat, lng) {
-  const m = L.circleMarker([lat, lng], {
-    radius: MARKER_RADIUS,
-    fillColor: '#fff',
-    fillOpacity: 0.88,
-    weight: 1,
-    color: 'rgba(0,0,0,0.12)',
+  const m = L.marker([lat, lng], {
+    icon: L.divIcon({
+      className: '',
+      html: '<div class="swft-dot"></div>',
+      iconSize:   [MARKER_SIZE, MARKER_SIZE],
+      iconAnchor: [MARKER_RADIUS, MARKER_RADIUS],
+    }),
   }).addTo(map)
   markers.push(m)
 }
