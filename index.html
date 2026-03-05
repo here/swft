@@ -4,17 +4,119 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>swft</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet" />
     <style>
+      /* -- Tokens --------------------------------------------------------------- */
+      :root {
+        --swft-white:   #ffffff;
+        --swft-surface: #fafaf8;
+        --swft-cloud:   #c8dcf0;
+        --swft-sky:     #d8eef8;
+        --swft-muted:   #9a8e88;
+        --swft-stroke:  rgba(0, 0, 0, 0.10);
+        --swft-shadow:  rgba(0, 0, 0, 0.08);
+      }
+
+      /* -- Reset ---------------------------------------------------------------- */
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body, #map { height: 100%; width: 100%; }
+      html, body, #map { height: 100%; width: 100%; font-family: 'Nunito', system-ui, sans-serif; }
+
+      /* -- Marker fade-in ------------------------------------------------------- */
+      .leaflet-interactive {
+        opacity: 0;
+        animation: swft-appear 400ms ease-out forwards;
+      }
+      @keyframes swft-appear {
+        to { opacity: 1; }
+      }
+
+      /* -- Leaflet zoom controls ------------------------------------------------ */
+      .leaflet-control-zoom {
+        border: none !important;
+        box-shadow: 0 2px 12px var(--swft-shadow) !important;
+        border-radius: 999px !important;
+        overflow: hidden;
+      }
+      .leaflet-control-zoom a {
+        background: var(--swft-white) !important;
+        color: var(--swft-muted) !important;
+        border: none !important;
+        font-family: 'Nunito', system-ui, sans-serif !important;
+        font-weight: 300 !important;
+        transition: background 150ms ease, color 150ms ease;
+      }
+      .leaflet-control-zoom a:hover {
+        background: var(--swft-sky) !important;
+        color: #5a7a90 !important;
+      }
+      .leaflet-control-zoom-in  { border-bottom: 1px solid var(--swft-stroke) !important; }
+
+      /* -- Leaflet attribution -------------------------------------------------- */
+      .leaflet-control-attribution {
+        background: rgba(255, 255, 255, 0.75) !important;
+        backdrop-filter: blur(4px);
+        color: var(--swft-muted) !important;
+        font-family: 'Nunito', system-ui, sans-serif !important;
+        font-size: 10px !important;
+        font-weight: 300 !important;
+        border-radius: 8px 0 0 0 !important;
+        padding: 2px 6px !important;
+        box-shadow: none !important;
+      }
+      .leaflet-control-attribution a { color: var(--swft-muted) !important; }
+
+      /* -- SWFT button container ------------------------------------------------ */
+      #swft-controls {
+        position: fixed;
+        bottom: 32px;
+        right: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        z-index: 1000;
+      }
+
+      /* -- SWFT button base ----------------------------------------------------- */
+      .swft-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        border: 1px solid var(--swft-stroke);
+        background: var(--swft-white);
+        box-shadow: 0 2px 12px var(--swft-shadow);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--swft-muted);
+        transition: background 150ms ease, color 150ms ease, transform 100ms ease, box-shadow 150ms ease;
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+      }
+      .swft-btn:hover {
+        background: var(--swft-sky);
+        color: #5a7a90;
+      }
+      .swft-btn:active {
+        transform: scale(0.94);
+      }
+      .swft-btn:focus-visible {
+        outline: 2px solid rgba(150, 200, 230, 0.6);
+        outline-offset: 2px;
+      }
+      .swft-btn.active {
+        background: var(--swft-cloud);
+        color: #3a6a88;
+        box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.08), 0 2px 12px var(--swft-shadow);
+      }
     </style>
   </head>
   <body>
     <div id="map"></div>
+    <div id="swft-controls"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
