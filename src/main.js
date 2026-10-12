@@ -4,7 +4,10 @@ import { createClient } from '@supabase/supabase-js'
 // -- Supabase client ----------------------------------------------------------
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
+  import.meta.env.VITE_SUPABASE_ANON_KEY,
+  // No user auth yet: skip session storage so supabase-js never takes the
+  // cross-tab Navigator LockManager lock (which can get stuck and block inserts)
+  { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } }
 )
 
 // -- Map setup ----------------------------------------------------------------
